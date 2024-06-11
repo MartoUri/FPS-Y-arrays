@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionArea : MonoBehaviour
 {
+    public Text text;
     public GameObject filete;
+    int score = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +20,14 @@ public class InteractionArea : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Colision");
-        if (collision.gameObject == filete) Debug.Log("Estaba rico el filete");
-    }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Colision con" + other.name);
+        Debug.Log("Colision con " + other.name);
+        score += (other.gameObject.GetComponent<PickUpScript>().valor);
+        text.text = score.ToString();
+        if (other.gameObject.GetComponent<PickUpScript>().esalimento)
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
